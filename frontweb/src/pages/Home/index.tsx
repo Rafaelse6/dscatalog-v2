@@ -1,6 +1,8 @@
 import { ReactComponent as MainImage } from 'assets/images/main-image.svg';
 import Navbar from 'components/NavBar';
 
+import './styles.css';
+
 const Home = () => {
   return (
     <>
