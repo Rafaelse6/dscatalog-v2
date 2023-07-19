@@ -1,21 +1,26 @@
 import { ReactComponent as ArrowIcon } from 'assets/images/arrow.svg';
 import ProductPrice from 'components/ProductPrice';
 import './styles.css';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Product } from 'types/product';
 import axios from 'axios';
 import { BASE_URL } from 'util/requests';
 import { useEffect, useState } from 'react';
 
+type UrlParams = {
+  productId: string;
+};
+
 const ProductDetails = () => {
+  const { productId } = useParams<UrlParams>();
 
   const [product, setProduct] = useState<Product>();
 
   useEffect(() => {
-    axios.get(BASE_URL + '/products/1').then((response) => {
+    axios.get(`${BASE_URL}/products/${productId}`).then((response) => {
       setProduct(response.data);
     });
-  }, []);
+  }, [productId]);
 
   return (
     <div className="product-details-container">
@@ -29,10 +34,7 @@ const ProductDetails = () => {
         <div className="row">
           <div className="col-xl-6">
             <div className="img-container">
-              <img
-                src={product?.imgUrl}
-                alt={product?.name}
-              />
+              <img src={product?.imgUrl} alt={product?.name} />
             </div>
             <div className="name-price-container">
               <h1>{product?.name}</h1>
@@ -42,9 +44,7 @@ const ProductDetails = () => {
           <div className="col-xl-6">
             <div className="description-container">
               <h2>Descrição do produto</h2>
-              <p>
-                {product?.description}
-              </p>
+              <p>{product?.description}</p>
             </div>
           </div>
         </div>
