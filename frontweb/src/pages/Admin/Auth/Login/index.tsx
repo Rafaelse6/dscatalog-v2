@@ -12,7 +12,11 @@ type FormData = {
 };
 
 const Login = () => {
-  const { register, handleSubmit } = useForm<FormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
   const [hasError, setHasError] = useState(false);
 
@@ -37,21 +41,31 @@ const Login = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <input
-            {...register('username')}
+            {...register('username', {
+              required: 'Campo obrigatório',
+            })}
             type="text"
             className="form-control base-input"
             placeholder="Email"
             name="username"
           />
         </div>
+        <div className="invalid-feedback d-block">
+          {errors.username?.message}
+        </div>
         <div className="mb-2">
           <input
-            {...register('password')}
+            {...register('password', {
+              required: 'Campo obrigatório',
+            })}
             type="password"
             className="form-control base-input "
             placeholder="Password"
             name="password"
           />
+        </div>
+        <div className="invalid-feedback d-block">
+          {errors.password?.message}
         </div>
         <Link to="/admin/auth/recover" className="login-link-recover">
           Esqueci a senha
