@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import qs from 'qs';
 
 type LoginResponse = {
@@ -21,6 +21,10 @@ const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET ?? 'dscatalog123';
 type LoginData = {
   username: string;
   password: string;
+};
+
+export const requestBackend = (config: AxiosRequestConfig) => {
+  return axios({ ...config, baseURL: BASE_URL });
 };
 
 export const requestBackendLogin = (loginData: LoginData) => {
